@@ -60,8 +60,8 @@ class Tokenizer :
 				'full_stop' : ['white_space', True]
 			},
 			'error' : {
-				'digit' : ['error', False],
-				'letter' : ['error', False],
+				'digit' : ['error', True],
+				'letter' : ['error', True],
 				'literator' : ['error', True],
 				'white_space' : ['error', True],
 				'error' : ['error', False],
@@ -77,7 +77,7 @@ class Tokenizer :
 			return 'digit'
 		elif ord('a') <= ord(char.lower()) <= ord('z') :
 			return 'letter'
-		elif char in ['+', '-', '*', '/', '=', ';'] :
+		elif char in ['+', '-', '*', '/', '=', ';', '(', ')'] :
 			return 'literator'
 		elif char in [' ', '\t', '\n', '\r'] :
 			return 'white_space'
