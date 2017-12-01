@@ -102,6 +102,8 @@ class Tokenizer :
 			now_type = self.find_type(now_char)
 			self.state, is_cut = self.get_next_state(self.state, now_type)
 			if is_cut :
+				if self.state == 'literal' :
+					self.state = self.string[self.start_pos:self.stop_pos]
 				result = self.state+ ' ' +self.string[self.start_pos:self.stop_pos]
 				self.state = 'start'
 				self.start_pos = self.stop_pos
@@ -109,4 +111,6 @@ class Tokenizer :
 			else :
 				self.stop_pos += 1
 
+		if self.state == 'literal' :
+			self.state = self.string[self.start_pos:self.stop_pos]
 		return self.state+' '+self.string[self.start_pos:self.stop_pos]
