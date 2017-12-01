@@ -1,6 +1,8 @@
 from tokenizer import Tokenizer
+from parsers import Parser
 
 tokenizer = Tokenizer()
+parser = Parser()
 
 while True :
 	string = input()

@@ -1,4 +1,11 @@
 class Tokenizer :
+
+	def setting(self, string = '') :
+		self.start_pos = 0
+		self.stop_pos = 0
+		self.end_pos = len(string)
+		self.state = 'start'
+		self.string = string
 	
 	def __init__(self) :
 		self.setting()
@@ -6,7 +13,7 @@ class Tokenizer :
 			'start' : {
 				'digit' : ['int', False],
 				'letter' : ['id', False],
-				'literator' : ['literator', False],
+				'literal' : ['literal', False],
 				'white_space' : ['white_space', False],
 				'error' : ['error', False],
 				'full_stop' : ['error', False]
@@ -14,7 +21,7 @@ class Tokenizer :
 			'int' : {
 				'digit' : ['int', False],
 				'letter' : ['int', True],
-				'literator' : ['int', True],
+				'literal' : ['int', True],
 				'white_space' : ['int', True],
 				'error' : ['int', True],
 				'full_stop' : ['BReal', False]
@@ -22,7 +29,7 @@ class Tokenizer :
 			'BReal' : {
 				'digit' : ['real', False],
 				'letter' : ['error', True],
-				'literator' : ['error', True],
+				'literal' : ['error', True],
 				'white_space' : ['error', True],
 				'error' : ['error', True],
 				'full_stop' : ['error', True]
@@ -30,7 +37,7 @@ class Tokenizer :
 			'real' : {
 				'digit' : ['real', False],
 				'letter' : ['real', True],
-				'literator' : ['real', True],
+				'literal' : ['real', True],
 				'white_space' : ['real', True],
 				'error' : ['real', True],
 				'full_stop' : ['real', True]
@@ -38,23 +45,23 @@ class Tokenizer :
 			'id' : {
 				'digit' : ['id', False],
 				'letter' : ['id', False],
-				'literator' : ['id', True],
+				'literal' : ['id', True],
 				'white_space' : ['id', True],
 				'error' : ['id', True],
 				'full_stop' : ['id', True]
 			},
-			'literator' : {
-				'digit' : ['literator', True],
-				'letter' : ['literator', True],
-				'literator' : ['literator', True],
-				'white_space' : ['literator', True],
-				'error' : ['literator', True],
-				'full_stop' : ['literator', True]
+			'literal' : {
+				'digit' : ['literal', True],
+				'letter' : ['literal', True],
+				'literal' : ['literal', True],
+				'white_space' : ['literal', True],
+				'error' : ['literal', True],
+				'full_stop' : ['literal', True]
 			},
 			'white_space' : {
 				'digit' : ['white_space', True],
 				'letter' : ['white_space', True],
-				'literator' : ['white_space', True],
+				'literal' : ['white_space', True],
 				'white_space' : ['white_space', False],
 				'error' : ['white_space', True],
 				'full_stop' : ['white_space', True]
@@ -62,7 +69,7 @@ class Tokenizer :
 			'error' : {
 				'digit' : ['error', True],
 				'letter' : ['error', True],
-				'literator' : ['error', True],
+				'literal' : ['error', True],
 				'white_space' : ['error', True],
 				'error' : ['error', False],
 				'full_stop' : ['error', True]
@@ -78,7 +85,7 @@ class Tokenizer :
 		elif ord('a') <= ord(char.lower()) <= ord('z') :
 			return 'letter'
 		elif char in ['+', '-', '*', '/', '=', ';', '(', ')'] :
-			return 'literator'
+			return 'literal'
 		elif char in [' ', '\t', '\n', '\r'] :
 			return 'white_space'
 		elif char == '.' :
@@ -103,10 +110,3 @@ class Tokenizer :
 				self.stop_pos += 1
 
 		return self.state+' '+self.string[self.start_pos:self.stop_pos]
-
-	def setting(self, string = '') :
-		self.start_pos = 0
-		self.stop_pos = 0
-		self.end_pos = len(string)
-		self.state = 'start'
-		self.string = string
