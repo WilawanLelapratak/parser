@@ -8,5 +8,7 @@ while True :
 	string = input()
 	tokenizer.setting(string)
 	while not tokenizer.end_string() :
-		result = tokenizer.next()
-		print(result)
+		token = tokenizer.next()
+		print(token)
+		result = parser.parsing(token['state'])
+	
