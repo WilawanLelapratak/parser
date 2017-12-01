@@ -1,11 +1,11 @@
 class Tokenizer :
 
 	def setting(self, string = '') :
+		self.string = string.rstrip()
 		self.start_pos = 0
 		self.stop_pos = 0
-		self.end_pos = len(string)
+		self.end_pos = len(self.string)
 		self.state = 'start'
-		self.string = string
 	
 	def __init__(self) :
 		self.setting()
@@ -102,15 +102,16 @@ class Tokenizer :
 			now_type = self.find_type(now_char)
 			self.state, is_cut = self.get_next_state(self.state, now_type)
 			if is_cut :
-				if self.state == 'literal' :
-					self.state = self.string[self.start_pos:self.stop_pos]
-				result = self.state+ ' ' +self.string[self.start_pos:self.stop_pos]
+				word = self.string[self.start_pos:self.stop_pos]
+				self.state = word if self.state == 'literal' else self.state
+				result = {'state' : self.state, 'string' : word}
 				self.state = 'start'
 				self.start_pos = self.stop_pos
-				return result
+				if result['state'] != 'white_space' :
+					return result
 			else :
 				self.stop_pos += 1
 
-		if self.state == 'literal' :
-			self.state = self.string[self.start_pos:self.stop_pos]
-		return self.state+' '+self.string[self.start_pos:self.stop_pos]
+		word = self.string[self.start_pos:self.stop_pos]
+		self.state = word if self.state == 'literal' else self.state
+		return {'state' : self.state, 'string' : word}
