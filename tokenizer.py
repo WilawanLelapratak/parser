@@ -1,7 +1,7 @@
 class Tokenizer :
 	
 	def __init__(self) :
-		self.start_state = 'start'
+		self.setting()
 		self.soul = {
 			'start' : {
 				'digit' : ['int', False],
@@ -69,6 +69,9 @@ class Tokenizer :
 			},
 		}
 
+	def end_string(self) :
+		return self.stop_pos >= self.end_pos
+
 	def find_type(self, char) :
 		if ord('0') <= ord(char) <= ord('9') :
 			return 'digit'
@@ -86,20 +89,24 @@ class Tokenizer :
 	def get_next_state(self, now, char) :
 		return self.soul[now][char]
 
-	def tokenizing(self, string) :
-		start_pos = 0
-		stop_pos = 0
-		end_pos = len(string)
-		state = 'start'
-		while stop_pos < end_pos :
-			now_char = string[stop_pos]
+	def next(self) :
+		while not self.end_string() :
+			now_char = self.string[self.stop_pos]
 			now_type = self.find_type(now_char)
-			state, is_cut = self.get_next_state(state, now_type)
+			self.state, is_cut = self.get_next_state(self.state, now_type)
 			if is_cut :
-				print(state+' '+string[start_pos:stop_pos])
-				state = 'start'
-				start_pos = stop_pos
+				result = self.state+ ' ' +self.string[self.start_pos:self.stop_pos]
+				self.state = 'start'
+				self.start_pos = self.stop_pos
+				return result
 			else :
-				stop_pos += 1
+				self.stop_pos += 1
 
-		print(state+' '+string[start_pos:stop_pos])
+		return self.state+' '+self.string[self.start_pos:self.stop_pos]
+
+	def setting(self, string = '') :
+		self.start_pos = 0
+		self.stop_pos = 0
+		self.end_pos = len(string)
+		self.state = 'start'
+		self.string = string

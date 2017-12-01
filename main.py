@@ -4,5 +4,7 @@ tokenizer = Tokenizer()
 
 while True :
 	string = input()
-	result = tokenizer.tokenizing(string)
-	print(result)
+	tokenizer.setting(string)
+	while not tokenizer.end_string() :
+		result = tokenizer.next()
+		print(result)
