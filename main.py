@@ -7,6 +7,7 @@ parser = Parser()
 while True :
 	string = input()
 	tokenizer.setting(string)
+	parser.setting()
 	while not tokenizer.end_string() :
 		token = tokenizer.next()
 		print(token)

@@ -92,8 +92,8 @@ class Parser :
 			},
 			'F' : {
 				'id' : ['id', 'A'],
-				'int' : ['int'],
-				'real' : ['real'],
+				'int' : ['int', 'B'],
+				'real' : ['real', 'B'],
 				'+' : ['error'],
 				'-' : ['error'],
 				'*' : ['error'],
@@ -103,6 +103,20 @@ class Parser :
 				'(' : ['(', 'E', ')'],
 				')' : ['error'],
 				'' : ['error']
+			},
+			'B' : {
+				'id' : ['id'],
+				'int' : [],
+				'real' : [],
+				'+' : [],
+				'-' : [],
+				'*' : [],
+				'/' : [],
+				'=' : [], #
+				';' : [], #
+				'(' : [],
+				')' : [],
+				'' : []
 			},
 			'A' : {
 				'id' : [],
@@ -128,6 +142,7 @@ class Parser :
 			print(self.stack)
 		else :
 			self.stack = self.soul[self.stack.pop(0)][state] + self.stack
+			print(self.stack)
 			self.parsing(state)
 
 	def is_accept(self) :
