@@ -82,3 +82,24 @@ class Tokenizer :
 			return 'full_stop'
 		else :
 			return 'error'
+
+	def get_next_state(self, now, char) :
+		return self.soul[now][char]
+
+	def tokenizing(self, string) :
+		start_pos = 0
+		stop_pos = 0
+		end_pos = len(string)
+		state = 'start'
+		while stop_pos < end_pos :
+			now_char = string[stop_pos]
+			now_type = self.find_type(now_char)
+			state, is_cut = self.get_next_state(state, now_type)
+			if is_cut :
+				print(state+' '+string[start_pos:stop_pos])
+				state = 'start'
+				start_pos = stop_pos
+			else :
+				stop_pos += 1
+
+		print(state+' '+string[start_pos:stop_pos])
