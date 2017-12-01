@@ -135,11 +135,11 @@ class Parser :
 		}
 		
 	def parsing(self, state) :
-		print(self.stack[0])
-		print(state)
+		# print(self.stack[0])
+		# print(state)
 		if self.stack[0] == state :
 			self.stack.pop(0)
-			print(self.stack)
+			# print(self.stack)
 			return True
 		else :
 			head = self.stack.pop(0)
@@ -148,7 +148,7 @@ class Parser :
 			self.stack = self.soul[head][state] + self.stack
 			if self.stack[0] == 'error' :
 				return False
-			print(self.stack)
+			# print(self.stack)
 			return self.parsing(state)
 
 	def is_accept(self) :
