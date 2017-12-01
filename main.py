@@ -11,4 +11,7 @@ while True :
 		token = tokenizer.next()
 		print(token)
 		result = parser.parsing(token['state'])
-	
+	if parser.is_accept() :
+		print('accept')
+	else :
+		print('reject')

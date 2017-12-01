@@ -1,7 +1,7 @@
 class Parser :
 
 	def setting(self) :
-		self.stack = ['S']
+		self.stack = ['S', '']
 
 	def __init__(self):
 		self.setting()
@@ -129,3 +129,7 @@ class Parser :
 		else :
 			self.stack = self.soul[self.stack.pop(0)][state] + self.stack
 			self.parsing(state)
+
+	def is_accept(self) :
+		self.parsing('')
+		return self.stack == []
